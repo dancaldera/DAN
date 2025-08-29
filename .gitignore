@@ -17,3 +17,6 @@ tmp/
 # Test coverage
 coverage/
 cov/
+
+# Temporary files
+docs/temp
