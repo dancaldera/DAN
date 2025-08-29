@@ -1,5 +1,5 @@
 import { load } from "@std/dotenv";
-import { query, closePool } from "./pool.ts";
+import { closePool, query } from "./pool.ts";
 
 async function runMigrations() {
   await load({ export: true });
@@ -9,7 +9,7 @@ async function runMigrations() {
     port: Deno.env.get("PGPORT"),
     user: Deno.env.get("PGUSER"),
     password: Deno.env.get("PGPASSWORD") ? "***" : "NOT SET",
-    database: Deno.env.get("PGDATABASE")
+    database: Deno.env.get("PGDATABASE"),
   });
 
   try {
@@ -36,7 +36,6 @@ async function runMigrations() {
 
     console.log("✅ Sample data inserted");
     console.log("🎉 Migrations completed successfully!");
-
   } catch (error) {
     console.error("❌ Migration failed:", error);
     throw error;

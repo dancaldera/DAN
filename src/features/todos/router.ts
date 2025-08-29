@@ -1,5 +1,5 @@
 import { Router } from "../../router.ts";
-import { getAllTodos, createTodo, updateTodo, deleteTodo } from "./service.ts";
+import { createTodo, deleteTodo, getAllTodos, updateTodo } from "./service.ts";
 
 const todoRouter = new Router();
 
@@ -32,44 +32,48 @@ todoRouter.get("/", async (request: Request): Promise<Response> => {
         </form>
         
         <div id="todo-list">
-            ${todos.map(todo => `
-                <div class="todo-item ${todo.completed ? 'completed' : ''}" id="todo-${todo.id}">
+            ${
+    todos.map((todo) => `
+                <div class="todo-item ${
+      todo.completed ? "completed" : ""
+    }" id="todo-${todo.id}">
                     <span>${todo.title}</span>
                     <button class="toggle-btn" hx-put="/todos/${todo.id}/toggle" hx-target="#todo-${todo.id}" hx-swap="outerHTML">
-                        ${todo.completed ? 'Undo' : 'Complete'}
+                        ${todo.completed ? "Undo" : "Complete"}
                     </button>
                     <button class="delete-btn" hx-delete="/todos/${todo.id}" hx-target="#todo-${todo.id}" hx-swap="outerHTML">
                         Delete
                     </button>
                 </div>
-            `).join('')}
+            `).join("")
+  }
         </div>
     </body>
     </html>
   `;
-  
+
   return new Response(html, {
-    headers: { "Content-Type": "text/html" }
+    headers: { "Content-Type": "text/html" },
   });
 });
 
 todoRouter.get("/todos", async (request: Request): Promise<Response> => {
   const todos = await getAllTodos();
   return new Response(JSON.stringify(todos), {
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
   });
 });
 
 todoRouter.post("/todos", async (request: Request): Promise<Response> => {
   const formData = await request.formData();
   const title = formData.get("title") as string;
-  
+
   if (!title) {
     return new Response("Title is required", { status: 400 });
   }
-  
+
   const todo = await createTodo(title);
-  
+
   const html = `
     <div class="todo-item" id="todo-${todo.id}">
         <span>${todo.title}</span>
@@ -81,45 +85,50 @@ todoRouter.post("/todos", async (request: Request): Promise<Response> => {
         </button>
     </div>
   `;
-  
+
   return new Response(html, {
-    headers: { "Content-Type": "text/html" }
+    headers: { "Content-Type": "text/html" },
   });
 });
 
-todoRouter.put("/todos/:id/toggle", async (request: Request): Promise<Response> => {
-  const url = new URL(request.url);
-  const id = parseInt(url.pathname.split('/')[2]);
-  
-  const todo = await updateTodo(id, { completed: true });
-  
-  if (!todo) {
-    return new Response("Todo not found", { status: 404 });
-  }
-  
-  const html = `
-    <div class="todo-item ${todo.completed ? 'completed' : ''}" id="todo-${todo.id}">
+todoRouter.put(
+  "/todos/:id/toggle",
+  async (request: Request): Promise<Response> => {
+    const url = new URL(request.url);
+    const id = parseInt(url.pathname.split("/")[2]);
+
+    const todo = await updateTodo(id, { completed: true });
+
+    if (!todo) {
+      return new Response("Todo not found", { status: 404 });
+    }
+
+    const html = `
+    <div class="todo-item ${
+      todo.completed ? "completed" : ""
+    }" id="todo-${todo.id}">
         <span>${todo.title}</span>
         <button class="toggle-btn" hx-put="/todos/${todo.id}/toggle" hx-target="#todo-${todo.id}" hx-swap="outerHTML">
-            ${todo.completed ? 'Undo' : 'Complete'}
+            ${todo.completed ? "Undo" : "Complete"}
         </button>
         <button class="delete-btn" hx-delete="/todos/${todo.id}" hx-target="#todo-${todo.id}" hx-swap="outerHTML">
             Delete
         </button>
     </div>
   `;
-  
-  return new Response(html, {
-    headers: { "Content-Type": "text/html" }
-  });
-});
+
+    return new Response(html, {
+      headers: { "Content-Type": "text/html" },
+    });
+  },
+);
 
 todoRouter.delete("/todos/:id", async (request: Request): Promise<Response> => {
   const url = new URL(request.url);
-  const id = parseInt(url.pathname.split('/')[2]);
-  
+  const id = parseInt(url.pathname.split("/")[2]);
+
   await deleteTodo(id);
-  
+
   return new Response("", { status: 200 });
 });
 

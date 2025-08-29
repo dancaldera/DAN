@@ -1,6 +1,7 @@
 # Deno + HTMX + PostgreSQL Todo App
 
-A modern full-stack todo application built with the latest Deno ecosystem libraries, HTMX for dynamic interactions, and PostgreSQL for data persistence.
+A modern full-stack todo application built with the latest Deno ecosystem
+libraries, HTMX for dynamic interactions, and PostgreSQL for data persistence.
 
 ## Features
 
@@ -26,7 +27,7 @@ A modern full-stack todo application built with the latest Deno ecosystem librar
    ```bash
    git clone <your-repo-url>
    cd DAN
-   
+
    # Install/update Deno to latest version
    deno upgrade
    ```
@@ -35,7 +36,7 @@ A modern full-stack todo application built with the latest Deno ecosystem librar
    ```bash
    # Start PostgreSQL database
    docker compose up -d db
-   
+
    # Wait for database to be ready, then run migrations
    deno task migrate
    ```
@@ -44,7 +45,7 @@ A modern full-stack todo application built with the latest Deno ecosystem librar
    ```bash
    # Start the Deno server
    deno task dev
-   
+
    # Or run everything with Docker
    docker compose up
    ```
@@ -57,7 +58,7 @@ A modern full-stack todo application built with the latest Deno ecosystem librar
 ## Available Scripts
 
 - `deno task dev` - Start development server
-- `deno task start` - Start production server  
+- `deno task start` - Start production server
 - `deno task migrate` - Run database migrations
 
 ## Project Structure
@@ -81,18 +82,18 @@ src/
 
 ## Technology Stack
 
-| Component | Version | Purpose |
-|-----------|---------|---------|
-| **Deno** | 2.3.4 | Runtime and package management |
-| **@std/http** | ^1.0.8 | Modern HTTP server (JSR) |
-| **postgres** | v0.19.5 | PostgreSQL driver |
-| **HTMX** | 1.9.10 | Dynamic HTML interactions |
-| **PostgreSQL** | 17-alpine | Database |
+| Component      | Version   | Purpose                        |
+| -------------- | --------- | ------------------------------ |
+| **Deno**       | 2.3.4     | Runtime and package management |
+| **@std/http**  | ^1.0.8    | Modern HTTP server (JSR)       |
+| **postgres**   | v0.19.5   | PostgreSQL driver              |
+| **HTMX**       | 1.9.10    | Dynamic HTML interactions      |
+| **PostgreSQL** | 17-alpine | Database                       |
 
 ## Key Updates from Legacy Versions
 
 - ✅ Migrated from `https://deno.land/std@` to `jsr:@std/`
-- ✅ Updated PostgreSQL driver from v0.17.0 to v0.19.5  
+- ✅ Updated PostgreSQL driver from v0.17.0 to v0.19.5
 - ✅ Enhanced connection pooling (10 connections)
 - ✅ Added graceful shutdown handling
 - ✅ Improved error handling and logging
@@ -109,25 +110,27 @@ src/
 
 ## Environment Variables
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PGHOST` | localhost | PostgreSQL host |
-| `PGPORT` | 5432 | PostgreSQL port |  
-| `PGUSER` | deno | Database user |
-| `PGPASSWORD` | secret | Database password |
-| `PGDATABASE` | denodb | Database name |
-| `PORT` | 8000 | Server port |
-| `DENO_ENV` | development | Environment mode |
+| Variable     | Default     | Description       |
+| ------------ | ----------- | ----------------- |
+| `PGHOST`     | localhost   | PostgreSQL host   |
+| `PGPORT`     | 5432        | PostgreSQL port   |
+| `PGUSER`     | deno        | Database user     |
+| `PGPASSWORD` | secret      | Database password |
+| `PGDATABASE` | denodb      | Database name     |
+| `PORT`       | 8000        | Server port       |
+| `DENO_ENV`   | development | Environment mode  |
 
 ## Development
 
 ### Running Tests
+
 ```bash
 # Add your test files to a tests/ directory
 deno test --allow-all
 ```
 
 ### Database Operations
+
 ```bash
 # Connect to database
 docker compose exec db psql -U deno -d denodb
@@ -138,6 +141,7 @@ docker compose logs -f api
 ```
 
 ### Adding New Features
+
 1. Create feature directory in `src/features/`
 2. Add router, service, and templates
 3. Register router in `src/server.ts`
@@ -160,6 +164,7 @@ docker compose logs -f api
 ## Troubleshooting
 
 **Database Connection Issues:**
+
 ```bash
 # Check if PostgreSQL is running
 docker compose ps db
@@ -172,10 +177,12 @@ docker compose down -v && docker compose up -d db
 ```
 
 **Deno Permission Issues:**
+
 - Ensure you're using `--allow-all` or specific permissions
 - Check file paths are absolute when needed
 
 **HTMX Not Working:**
+
 - Verify HTMX script is loaded in templates
 - Check browser console for errors
 - Ensure CORS headers are properly set
@@ -185,9 +192,10 @@ docker compose down -v && docker compose up -d db
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests if applicable  
+4. Add tests if applicable
 5. Submit a pull request
 
 ## License
 
-MIT License - feel free to use this project as a starting point for your own applications.
+MIT License - feel free to use this project as a starting point for your own
+applications.

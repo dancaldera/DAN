@@ -71,7 +71,7 @@ export class Router {
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...this.corsHeaders },
-        }
+        },
       );
     }
   }
@@ -80,31 +80,31 @@ export class Router {
     const url = new URL(request.url);
     const method = request.method;
     const pathname = url.pathname;
-    
+
     // Try exact match first
     const exactKey = `${method}:${pathname}`;
     const exactHandler = this.routes.get(exactKey);
-    
+
     if (exactHandler) {
       return await exactHandler(request);
     }
-    
+
     // Try pattern matching for dynamic routes
     for (const [routeKey, handler] of this.routes.entries()) {
-      const [routeMethod, ...routePathParts] = routeKey.split(':');
-      const routePath = routePathParts.join(':');
-      
+      const [routeMethod, ...routePathParts] = routeKey.split(":");
+      const routePath = routePathParts.join(":");
+
       if (routeMethod !== method) continue;
-      
+
       // Simple pattern matching for :id routes
-      if (routePath.includes(':')) {
-        const routeParts = routePath.split('/');
-        const pathParts = pathname.split('/');
-        
+      if (routePath.includes(":")) {
+        const routeParts = routePath.split("/");
+        const pathParts = pathname.split("/");
+
         if (routeParts.length === pathParts.length) {
           let matches = true;
           for (let i = 0; i < routeParts.length; i++) {
-            if (routeParts[i].startsWith(':')) {
+            if (routeParts[i].startsWith(":")) {
               continue; // This is a parameter, skip matching
             }
             if (routeParts[i] !== pathParts[i]) {
@@ -112,7 +112,7 @@ export class Router {
               break;
             }
           }
-          
+
           if (matches) {
             return await handler(request);
           }

@@ -3,9 +3,9 @@ import { Client } from "postgres";
 
 async function simpleMigration() {
   await load({ export: true });
-  
+
   console.log("🔄 Running simple database migration...");
-  
+
   const client = new Client({
     hostname: Deno.env.get("PGHOST") ?? "127.0.0.1",
     port: Number(Deno.env.get("PGPORT") ?? 5432),
@@ -41,7 +41,6 @@ async function simpleMigration() {
 
     console.log("✅ Sample data inserted");
     console.log("🎉 Migration completed successfully!");
-
   } catch (error) {
     console.error("❌ Migration failed:", error);
     throw error;
