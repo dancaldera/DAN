@@ -1,7 +1,6 @@
 # Deno + HTMX + PostgreSQL Todo App
 
-A modern full-stack todo application built with the latest Deno ecosystem libraries, HTMX for dynamic interactions, and
-PostgreSQL for data persistence.
+A modern, minimal full‑stack todo app using Deno 2, HTMX for progressive enhancement, and PostgreSQL for persistence. It includes a lightweight router with CORS, simple middleware, connection pooling, and auto‑migrations for a smooth local dev experience.
 
 ## Features
 
@@ -23,43 +22,31 @@ PostgreSQL for data persistence.
 
 ### Installation & Setup
 
-1. **Clone and setup the project:**
+1. Clone and ensure Deno is up to date
    ```bash
    git clone <your-repo-url>
    cd DAN
-
-   # Install/update Deno to latest version
    deno upgrade
    ```
-
-2. **Start the development environment:**
+2. Start PostgreSQL and run migrations
    ```bash
-   # Start PostgreSQL database
    docker compose up -d db
-
-   # Wait for database to be ready, then run migrations
    deno task migrate
    ```
-
-3. **Start the development server:**
+3. Run the API
    ```bash
-   # Start the Deno server
    deno task dev
-
-   # Or run everything with Docker
+   # or run API + DB with Docker
    docker compose up
    ```
-
-4. **Open your browser:**
-   ```
-   http://localhost:8000
-   ```
+4. Open http://localhost:8000
 
 ## Available Scripts
 
 - `deno task dev` - Start development server
 - `deno task start` - Start production server
 - `deno task migrate` - Run database migrations
+- `deno fmt` / `deno lint` - Format and lint the codebase
 
 ## Project Structure
 
@@ -84,21 +71,11 @@ src/
 
 | Component      | Version   | Purpose                        |
 | -------------- | --------- | ------------------------------ |
-| **Deno**       | 2.3.4     | Runtime and package management |
+| **Deno**       | 2.3.x     | Runtime and package management |
 | **@std/http**  | ^1.0.8    | Modern HTTP server (JSR)       |
-| **postgres**   | v0.19.5   | PostgreSQL driver              |
+| **postgres**   | v0.19.x   | PostgreSQL driver              |
 | **HTMX**       | 1.9.10    | Dynamic HTML interactions      |
 | **PostgreSQL** | 17-alpine | Database                       |
-
-## Key Updates from Legacy Versions
-
-- ✅ Migrated from `https://deno.land/std@` to `jsr:@std/`
-- ✅ Updated PostgreSQL driver from v0.17.0 to v0.19.5
-- ✅ Enhanced connection pooling (10 connections)
-- ✅ Added graceful shutdown handling
-- ✅ Improved error handling and logging
-- ✅ Production-ready TLS support
-- ✅ Modern Docker setup with health checks
 
 ## API Endpoints
 
@@ -146,20 +123,6 @@ docker compose logs -f api
 2. Add router, service, and templates
 3. Register router in `src/server.ts`
 4. Add database migrations if needed
-
-## Production Deployment
-
-1. **Environment Setup:**
-   ```bash
-   export DENO_ENV=production
-   export PGHOST=your-production-db-host
-   # ... other production variables
-   ```
-
-2. **Deploy with Docker:**
-   ```bash
-   docker compose -f docker-compose.prod.yml up -d
-   ```
 
 ## Troubleshooting
 
