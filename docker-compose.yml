@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: deno
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: denodb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U deno -d denodb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  api:
+    image: denoland/deno:2.3.4
+    working_dir: /app
+    volumes:
+      - ./:/app:ro
+    command: ["run", "--allow-all", "src/server.ts"]
+    environment:
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: deno
+      PGPASSWORD: secret
+      PGDATABASE: denodb
+      DENO_ENV: development
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

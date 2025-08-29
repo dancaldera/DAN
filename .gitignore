@@ -1,0 +1,19 @@
+# Environment and secrets
+.env
+
+# OS files
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Build and caches
+dist/
+tmp/
+.cache/
+.deno/
+
+# Test coverage
+coverage/
+cov/
