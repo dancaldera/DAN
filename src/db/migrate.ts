@@ -1,16 +1,16 @@
-import { load } from "@std/dotenv";
-import { closePool, query } from "./pool.ts";
+import { load } from '@std/dotenv'
+import { closePool, query } from './pool.ts'
 
 async function runMigrations() {
-  await load({ export: true });
-  console.log("🔄 Running database migrations...");
-  console.log("DB Config:", {
-    host: Deno.env.get("PGHOST"),
-    port: Deno.env.get("PGPORT"),
-    user: Deno.env.get("PGUSER"),
-    password: Deno.env.get("PGPASSWORD") ? "***" : "NOT SET",
-    database: Deno.env.get("PGDATABASE"),
-  });
+  await load({ export: true })
+  console.log('🔄 Running database migrations...')
+  console.log('DB Config:', {
+    host: Deno.env.get('PGHOST'),
+    port: Deno.env.get('PGPORT'),
+    user: Deno.env.get('PGUSER'),
+    password: Deno.env.get('PGPASSWORD') ? '***' : 'NOT SET',
+    database: Deno.env.get('PGDATABASE'),
+  })
 
   try {
     await query(`
@@ -21,9 +21,9 @@ async function runMigrations() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
-    `);
+    `)
 
-    console.log("✅ Todos table created or already exists");
+    console.log('✅ Todos table created or already exists')
 
     await query(`
       INSERT INTO todos (title, completed) 
@@ -32,18 +32,18 @@ async function runMigrations() {
         ('Build HTMX app', false),
         ('Deploy to production', false)
       ON CONFLICT DO NOTHING
-    `);
+    `)
 
-    console.log("✅ Sample data inserted");
-    console.log("🎉 Migrations completed successfully!");
+    console.log('✅ Sample data inserted')
+    console.log('🎉 Migrations completed successfully!')
   } catch (error) {
-    console.error("❌ Migration failed:", error);
-    throw error;
+    console.error('❌ Migration failed:', error)
+    throw error
   } finally {
-    await closePool();
+    await closePool()
   }
 }
 
 if (import.meta.main) {
-  runMigrations().catch(console.error);
+  runMigrations().catch(console.error)
 }

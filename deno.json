@@ -10,5 +10,19 @@
     "start": "deno run --allow-net --allow-env --allow-read src/server.ts",
     "migrate": "deno run --allow-all src/db/migrate.ts"
   },
-  "compilerOptions": {}
+  "compilerOptions": {},
+  "fmt": {
+    "lineWidth": 120,
+    "indentWidth": 2,
+    "singleQuote": true,
+    "semiColons": false,
+    "useTabs": false
+  },
+  "lint": {
+    "rules": {
+      "tags": ["recommended"],
+      "include": [],
+      "exclude": []
+    }
+  }
 }

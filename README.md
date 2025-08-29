@@ -1,7 +1,7 @@
 # Deno + HTMX + PostgreSQL Todo App
 
-A modern full-stack todo application built with the latest Deno ecosystem
-libraries, HTMX for dynamic interactions, and PostgreSQL for data persistence.
+A modern full-stack todo application built with the latest Deno ecosystem libraries, HTMX for dynamic interactions, and
+PostgreSQL for data persistence.
 
 ## Features
 
@@ -197,5 +197,4 @@ docker compose down -v && docker compose up -d db
 
 ## License
 
-MIT License - feel free to use this project as a starting point for your own
-applications.
+MIT License - feel free to use this project as a starting point for your own applications.
